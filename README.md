@@ -4,7 +4,7 @@ A modern and responsive web application designed to help students track daily ex
 
 ## 🚀 Live Demo
 
-Coming soon.
+[**View SpendWise Live →**](https://manikandans-dev01.github.io/student-expense-tracker/)
 
 ## ✨ Features
 
