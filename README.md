@@ -1,2 +1,2 @@
-# student-expense-tracker
+# Person-expense-tracker
 A simple web-based expense tracker for students
