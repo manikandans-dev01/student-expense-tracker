@@ -33,8 +33,6 @@ SpendWise was developed as a student web development project to provide a simple
 ## 📂 Project Structure
 
 ```text
-spendwise-student-expense-tracker/
-│
+student-expense-tracker/
 ├── index.html
-├── README.md
-└── assets/
+└── README.md
