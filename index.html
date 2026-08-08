@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Expense Tracker</title>
+</head>
+
+<body>
+
+    <h1>💰 Student Expense Tracker</h1>
+
+    <p>Track your daily expenses easily.</p>
+
+    <input type="text" id="expenseName" placeholder="Expense name">
+    <input type="number" id="expenseAmount" placeholder="Amount">
+
+    <button onclick="addExpense()">Add Expense</button>
+
+    <h2>Total: ₹<span id="total">0</span></h2>
+
+    <ul id="expenseList"></ul>
+
+    <script>
+        let total = 0;
+
+        function addExpense() {
+            const name = document.getElementById("expenseName").value;
+            const amount = Number(document.getElementById("expenseAmount").value);
+
+            if (name === "" || amount <= 0) {
+                alert("Please enter valid expense details!");
+                return;
+            }
+
+            const list = document.getElementById("expenseList");
+            const item = document.createElement("li");
+
+            item.textContent = name + " - ₹" + amount;
+            list.appendChild(item);
+
+            total += amount;
+            document.getElementById("total").textContent = total;
+
+            document.getElementById("expenseName").value = "";
+            document.getElementById("expenseAmount").value = "";
+        }
+    </script>
+
+</body>
+</html>
