@@ -3,48 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Expense Tracker</title>
+
+    <meta name="description"
+          content="Student Expense Tracker - A simple and professional web application for managing daily student expenses.">
+
+    <title>Student Expense Tracker | Manikandan</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+            padding: 35px 20px;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #dbeafe;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 18px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .card-title {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .main-card h2 {
+            margin-bottom: 6px;
+            font-size: 22px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 180px 130px;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .expense-list {
+            list-style: none;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .expense-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .expense-name {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .expense-category {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .expense-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .expense-amount {
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 11px;
+            font-size: 13px;
+        }
+
+        .delete-btn:hover {
+            background: #fecaca;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px 10px;
+            color: #94a3b8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .footer strong {
+            color: #2563eb;
+        }
+
+        @media (max-width: 700px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .form {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .expense-item {
+                align-items: flex-start;
+            }
+
+            .expense-right {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>💰 Student Expense Tracker</h1>
+    <header class="header">
+        <div class="header-content">
+            <div class="badge">💻 Student Web Project</div>
 
-    <p>Track your daily expenses easily.</p>
+            <h1>💰 Student Expense Tracker</h1>
 
-    <input type="text" id="expenseName" placeholder="Expense name">
-    <input type="number" id="expenseAmount" placeholder="Amount">
+            <p>
+                Track, manage and understand your daily expenses with a simple
+                and responsive web application.
+            </p>
+        </div>
+    </header>
 
-    <button onclick="addExpense()">Add Expense</button>
+    <main class="container">
 
-    <h2>Total: ₹<span id="total">0</span></h2>
+        <section class="dashboard">
 
-    <ul id="expenseList"></ul>
+            <div class="card">
+                <div class="card-title">Total Expenses</div>
+                <div class="card-value" id="total">₹0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Number of Expenses</div>
+                <div class="card-value" id="count">0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Average Expense</div>
+                <div class="card-value" id="average">₹0</div>
+            </div>
+
+        </section>
+
+        <section class="main-card">
+
+            <h2>Add New Expense</h2>
+
+            <p class="subtitle">
+                Record your daily spending and keep your budget under control.
+            </p>
+
+            <div class="form">
+
+                <input
+                    type="text"
+                    id="expenseName"
+                    placeholder="Expense name e.g. Lunch"
+                    maxlength="40"
+                >
+
+                <input
+                    type="number"
+                    id="expenseAmount"
+                    placeholder="Amount (₹)"
+                    min="1"
+                >
+
+                <select id="category">
+                    <option value="Food">🍔 Food</option>
+                    <option value="Travel">🚌 Travel</option>
+                    <option value="Education">📚 Education</option>
+                    <option value="Shopping">🛍️ Shopping</option>
+                    <option value="Entertainment">🎮 Entertainment</option>
+                    <option value="Other">📌 Other</option>
+                </select>
+
+            </div>
+
+            <button onclick="addExpense()">
+                + Add Expense
+            </button>
+
+        </section>
+
+        <br>
+
+        <section class="main-card">
+
+            <h2>Expense History</h2>
+
+            <p class="subtitle">
+                Your recently added expenses appear here.
+            </p>
+
+            <ul id="expenseList" class="expense-list"></ul>
+
+            <div id="emptyMessage" class="empty">
+                No expenses added yet.<br>
+                Start by adding your first expense above.
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        Built with HTML, CSS & JavaScript
+        <br><br>
+        <strong>Student Expense Tracker</strong> · Portfolio Project
+    </footer>
 
     <script>
-        let total = 0;
+
+        let expenses = JSON.parse(
+            localStorage.getItem("studentExpenses")
+        ) || [];
+
+        function saveExpenses() {
+            localStorage.setItem(
+                "studentExpenses",
+                JSON.stringify(expenses)
+            );
+        }
 
         function addExpense() {
-            const name = document.getElementById("expenseName").value;
-            const amount = Number(document.getElementById("expenseAmount").value);
+
+            const name =
+                document.getElementById("expenseName").value.trim();
+
+            const amount =
+                Number(document.getElementById("expenseAmount").value);
+
+            const category =
+                document.getElementById("category").value;
 
             if (name === "" || amount <= 0) {
-                alert("Please enter valid expense details!");
+                alert("Please enter a valid expense name and amount.");
                 return;
             }
 
-            const list = document.getElementById("expenseList");
-            const item = document.createElement("li");
+            const expense = {
+                id: Date.now(),
+                name: name,
+                amount: amount,
+                category: category
+            };
 
-            item.textContent = name + " - ₹" + amount;
-            list.appendChild(item);
+            expenses.push(expense);
 
-            total += amount;
-            document.getElementById("total").textContent = total;
+            saveExpenses();
 
             document.getElementById("expenseName").value = "";
             document.getElementById("expenseAmount").value = "";
+
+            updateDisplay();
         }
+
+        function deleteExpense(id) {
+
+            expenses = expenses.filter(
+                expense => expense.id !== id
+            );
+
+            saveExpenses();
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+
+            const list =
+                document.getElementById("expenseList");
+
+            const emptyMessage =
+                document.getElementById("emptyMessage");
+
+            list.innerHTML = "";
+
+            let total = 0;
+
+            expenses.forEach(expense => {
+
+                total += expense.amount;
+
+                const item =
+                    document.createElement("li");
+
+                item.className = "expense-item";
+
+                item.innerHTML = `
+                    <div class="expense-info">
+                        <span class="expense-name">
+                            ${expense.name}
+                        </span>
+
+                        <span class="expense-category">
+                            ${expense.category}
+                        </span>
+                    </div>
+
+                    <div class="expense-right">
+
+                        <span class="expense-amount">
+                            ₹${expense.amount.toLocaleString("en-IN")}
+                        </span>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteExpense(${expense.id})">
+                            Delete
+                        </button>
+
+                    </div>
+                `;
+
+                list.appendChild(item);
+            });
+
+            const count = expenses.length;
+
+            const average =
+                count > 0 ? total / count : 0;
+
+            document.getElementById("total")
+                .textContent =
+                "₹" + total.toLocaleString("en-IN");
+
+            document.getElementById("count")
+                .textContent = count;
+
+            document.getElementById("average")
+                .textContent =
+                "₹" + Math.round(average).toLocaleString("en-IN");
+
+            emptyMessage.style.display =
+                count === 0 ? "block" : "none";
+        }
+
+        document
+            .getElementById("expenseAmount")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+                    addExpense();
+                }
+
+            });
+
+        document
+            .getElementById("expenseName")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+                    addExpense();
+                }
+
+            });
+
+        updateDisplay();
+
     </script>
 
 </body>
