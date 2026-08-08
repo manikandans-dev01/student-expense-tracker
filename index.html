@@ -16,6 +16,10 @@ content="Student Expense Tracker - A professional web application for tracking a
 <style>
 
 :root {
+    --header-bg: #10151f;
+    --header-text: #ffffff;
+    --header-text-soft: #c3cad6;
+
     --ink: #10151f;
     --ink-soft: #4a5566;
     --ink-faint: #8892a0;
@@ -35,6 +39,22 @@ content="Student Expense Tracker - A professional web application for tracking a
     --font-mono: "IBM Plex Mono", "Courier New", monospace;
 }
 
+body.dark {
+    --ink: #e6edf3;
+    --ink-soft: #9aa7b8;
+    --ink-faint: #6b7685;
+    --paper: #0d1117;
+    --card: #161b22;
+    --line: #2a313c;
+    --emerald: #2ea36f;
+    --emerald-dark: #1f7a52;
+    --emerald-soft: rgba(46,163,111,0.16);
+    --amber: #d7a13a;
+    --amber-soft: rgba(215,161,58,0.14);
+    --brick: #e0685a;
+    --brick-soft: rgba(224,104,90,0.16);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -46,6 +66,7 @@ body {
     background: var(--paper);
     color: var(--ink);
     min-height: 100vh;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -59,8 +80,8 @@ body {
 
 .header {
     position: relative;
-    background: var(--ink);
-    color: white;
+    background: var(--header-bg);
+    color: var(--header-text);
     padding: 46px 20px 40px;
     background-image:
         linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
@@ -72,6 +93,32 @@ body {
 .header-content {
     max-width: 1050px;
     margin: auto;
+}
+
+.header-controls {
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.icon-btn:hover {
+    background: rgba(255,255,255,0.18);
 }
 
 .badge {
@@ -100,7 +147,7 @@ body {
 
 .header p {
     font-size: 16px;
-    color: #c3cad6;
+    color: var(--header-text-soft);
     max-width: 620px;
     line-height: 1.6;
 }
@@ -111,6 +158,31 @@ body {
     max-width: 1050px;
     margin: 30px auto;
     padding: 0 18px;
+}
+
+/* FILTER TOGGLE */
+
+.filter-toggle {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--card);
+}
+
+.filter-toggle button {
+    border-radius: 0;
+    padding: 9px 18px;
+    font-size: 13px;
+    background: transparent;
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+
+.filter-toggle button.active {
+    background: var(--emerald);
+    color: white;
 }
 
 /* DASHBOARD */
@@ -130,7 +202,7 @@ body {
     border-top: 3px solid var(--card-accent, var(--emerald));
 }
 
-.card:nth-child(2) { --card-accent: var(--ink); }
+.card:nth-child(2) { --card-accent: var(--ink-faint); }
 .card:nth-child(3) { --card-accent: var(--amber); }
 
 .card-title {
@@ -237,14 +309,121 @@ button {
     transform: scale(0.98);
 }
 
+.cancel-btn {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    margin-left: 10px;
+    display: none;
+}
+
+/* BUDGET / SAVINGS */
+
+.inline-form {
+    display: flex;
+    gap: 8px;
+}
+
+.inline-form input {
+    flex: 1;
+}
+
+.inline-form button {
+    white-space: nowrap;
+}
+
+.progress-track {
+    width: 100%;
+    height: 10px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 12px 0 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--emerald);
+    border-radius: 999px;
+    transition: width 0.3s ease, background 0.3s ease;
+    width: 0%;
+}
+
+.stat-note {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+}
+
+.week-line {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+}
+
+/* CATEGORY INSIGHTS */
+
+.insight-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+}
+
+.insight-label {
+    width: 130px;
+    flex-shrink: 0;
+}
+
+.insight-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--paper);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+
+.insight-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--emerald), #4fae86);
+    border-radius: 999px;
+}
+
+.insight-pct {
+    width: 120px;
+    text-align: right;
+    font-family: var(--font-mono);
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    font-size: 12.5px;
+}
+
 /* SEARCH */
 
 .search-box {
     margin-bottom: 22px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .search-box input {
-    max-width: 500px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.export-btn {
+    background: var(--ink);
+    color: var(--paper);
+    white-space: nowrap;
+}
+
+.export-btn:hover {
+    opacity: 0.88;
 }
 
 /* EXPENSE LIST */
@@ -293,7 +472,9 @@ button {
 .expense-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .expense-amount {
@@ -301,6 +482,20 @@ button {
     font-size: 16px;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
+}
+
+.edit-btn {
+    background: var(--amber-soft);
+    color: var(--amber);
+    padding: 8px 13px;
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.edit-btn:hover {
+    filter: brightness(0.95);
 }
 
 .delete-btn {
@@ -314,7 +509,7 @@ button {
 }
 
 .delete-btn:hover {
-    background: #f0d5cf;
+    filter: brightness(0.95);
 }
 
 /* EMPTY */
@@ -339,6 +534,57 @@ button {
     max-width: 950px;
     height: 360px;
     display: block;
+}
+
+/* LOCK OVERLAY */
+
+.lock-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(13,17,23,0.92);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lock-box {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 34px 28px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+.lock-box h3 {
+    font-family: var(--font-display);
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.lock-box p {
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    margin-bottom: 18px;
+}
+
+#unlockInput {
+    text-align: center;
+    letter-spacing: 0.3em;
+    font-size: 20px;
+    font-family: var(--font-mono);
+    margin-bottom: 10px;
+}
+
+.lock-error {
+    color: var(--brick);
+    font-size: 12.5px;
+    min-height: 16px;
+    margin-bottom: 10px;
 }
 
 /* FOOTER */
@@ -382,9 +628,7 @@ footer strong {
     }
 
     .expense-right {
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 8px;
+        justify-content: flex-start;
     }
 }
 
@@ -413,17 +657,82 @@ footer strong {
     .section h2 {
         font-size: 21px;
     }
+
+    .header-controls {
+        top: 18px;
+        right: 14px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOCK OVERLAY -->
+
+<div class="lock-overlay" id="lockOverlay">
+
+    <div class="lock-box">
+
+        <h3>🔒 Locked</h3>
+
+        <p>Enter your PIN to continue.</p>
+
+        <input
+            type="password"
+            id="unlockInput"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder="••••"
+            onkeydown="if(event.key === 'Enter') tryUnlock();"
+        >
+
+        <div class="lock-error" id="unlockError"></div>
+
+        <button
+            type="button"
+            class="add-btn"
+            style="width:100%;"
+            onclick="tryUnlock()"
+        >
+            Unlock
+        </button>
+
+    </div>
+
+</div>
+
+
 <!-- HEADER -->
 
 <header class="header">
 
     <div class="header-content">
+
+        <div class="header-controls">
+
+            <button
+                id="darkModeBtn"
+                class="icon-btn"
+                onclick="toggleDarkMode()"
+                title="Toggle dark mode"
+                type="button"
+            >
+                🌙
+            </button>
+
+            <button
+                id="lockBtn"
+                class="icon-btn"
+                onclick="lockApp()"
+                title="Lock app"
+                type="button"
+                style="display:none;"
+            >
+                🔒
+            </button>
+
+        </div>
 
         <div class="badge">
             ● Student Web Project
@@ -442,6 +751,13 @@ footer strong {
 
 
 <main class="container">
+
+    <!-- FILTER -->
+
+    <div class="filter-toggle">
+        <button type="button" id="filterAllBtn" onclick="setFilterMode('all')">All Time</button>
+        <button type="button" id="filterMonthBtn" onclick="setFilterMode('month')">This Month</button>
+    </div>
 
     <!-- DASHBOARD -->
 
@@ -488,11 +804,11 @@ footer strong {
     </section>
 
 
-    <!-- ADD EXPENSE -->
+    <!-- ADD / EDIT EXPENSE -->
 
     <section class="section">
 
-        <h2>Add New Expense</h2>
+        <h2 id="formTitle">Add New Expense</h2>
 
         <p class="section-description">
             Record your daily spending and keep your budget under control.
@@ -561,10 +877,61 @@ footer strong {
         <button
             type="button"
             class="add-btn"
+            id="expenseFormBtn"
             onclick="addExpense()"
         >
             + Add Expense
         </button>
+
+        <button
+            type="button"
+            class="cancel-btn"
+            id="cancelEditBtn"
+            onclick="cancelEdit()"
+        >
+            Cancel
+        </button>
+
+    </section>
+
+
+    <!-- BUDGET & GOALS -->
+
+    <section class="section">
+
+        <h2>Budget &amp; Goals</h2>
+
+        <p class="section-description">
+            Set a monthly budget and savings goal to stay on track.
+        </p>
+
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+
+            <div>
+                <label class="field-label" for="budgetInput">Monthly Budget (₹)</label>
+                <div class="inline-form">
+                    <input type="number" id="budgetInput" placeholder="e.g. 5000" min="1">
+                    <button type="button" class="add-btn" onclick="saveBudget()">Save</button>
+                </div>
+            </div>
+
+            <div>
+                <label class="field-label" for="savingsGoalInput">Savings Goal (₹)</label>
+                <div class="inline-form">
+                    <input type="number" id="savingsGoalInput" placeholder="e.g. 2000" min="1">
+                    <button type="button" class="add-btn" onclick="saveSavingsGoal()">Save</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="budgetBarFill"></div></div>
+        <p class="stat-note" id="budgetText">Set a monthly budget to track your spending.</p>
+
+        <div class="progress-track"><div class="progress-fill" id="savingsBarFill" style="background:var(--amber);"></div></div>
+        <p class="stat-note" id="savingsText">Set a savings goal to track progress.</p>
+
+        <p class="week-line" id="weekCompareText"></p>
 
     </section>
 
@@ -584,6 +951,21 @@ footer strong {
             <canvas id="expenseChart"></canvas>
 
         </div>
+
+    </section>
+
+
+    <!-- CATEGORY INSIGHTS -->
+
+    <section class="section">
+
+        <h2>Category Insights</h2>
+
+        <p class="section-description">
+            Percentage breakdown of your spending by category.
+        </p>
+
+        <div id="insightsList"></div>
 
     </section>
 
@@ -608,6 +990,8 @@ footer strong {
                 oninput="renderExpenses()"
             >
 
+            <button type="button" class="export-btn" onclick="exportCSV()">⬇ Export CSV</button>
+
         </div>
 
 
@@ -618,525 +1002,4 @@ footer strong {
 
 
         <div
-            class="empty-message"
-            id="emptyMessage"
-        >
-            No expenses added yet.<br>
-            Start by adding your first expense above.
-        </div>
-
-    </section>
-
-</main>
-
-
-<footer>
-
-    <p>
-        BUILT WITH HTML · CSS · JAVASCRIPT
-    </p>
-
-    <br>
-
-    <p>
-        <strong>Student Expense Tracker</strong>
-        · Portfolio Project
-    </p>
-
-</footer>
-
-
-<script>
-
-/* ==========================================
-   STUDENT EXPENSE TRACKER
-   ========================================== */
-
-
-/* ---------- DATA ---------- */
-
-let expenses = JSON.parse(
-    localStorage.getItem("studentExpenses")
-) || [];
-
-
-/* ---------- DEFAULT DATE ---------- */
-
-document.getElementById("expenseDate").value =
-    new Date().toISOString().split("T")[0];
-
-
-/* ---------- SAVE DATA ---------- */
-
-function saveExpenses() {
-
-    localStorage.setItem(
-        "studentExpenses",
-        JSON.stringify(expenses)
-    );
-
-}
-
-
-/* ---------- ADD EXPENSE ---------- */
-
-function addExpense() {
-
-    const name =
-        document.getElementById("expenseName").value.trim();
-
-    const amount =
-        Number(document.getElementById("expenseAmount").value);
-
-    const category =
-        document.getElementById("expenseCategory").value;
-
-    const date =
-        document.getElementById("expenseDate").value;
-
-
-    /* Validation */
-
-    if (
-        name === "" ||
-        amount <= 0 ||
-        date === ""
-    ) {
-
-        alert("Please enter valid expense details.");
-
-        return;
-    }
-
-
-    /* Create expense */
-
-    const expense = {
-
-        id: Date.now(),
-
-        name: name,
-
-        amount: amount,
-
-        category: category,
-
-        date: date
-
-    };
-
-
-    /* Add to array */
-
-    expenses.push(expense);
-
-
-    /* Save */
-
-    saveExpenses();
-
-
-    /* Refresh UI */
-
-    updateDashboard();
-
-    renderExpenses();
-
-    drawChart();
-
-
-    /* Clear inputs */
-
-    document.getElementById("expenseName").value = "";
-
-    document.getElementById("expenseAmount").value = "";
-
-    document.getElementById("expenseDate").value =
-        new Date().toISOString().split("T")[0];
-
-}
-
-
-/* ---------- DELETE EXPENSE ---------- */
-
-function deleteExpense(id) {
-
-    expenses = expenses.filter(
-        expense => expense.id !== id
-    );
-
-
-    saveExpenses();
-
-    updateDashboard();
-
-    renderExpenses();
-
-    drawChart();
-
-}
-
-
-/* ---------- FORMAT DATE ---------- */
-
-function formatDate(dateString) {
-
-    const date = new Date(dateString + "T00:00:00");
-
-    return date.toLocaleDateString(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-/* ---------- RENDER EXPENSES ---------- */
-
-function renderExpenses() {
-
-    const list =
-        document.getElementById("expenseList");
-
-    const emptyMessage =
-        document.getElementById("emptyMessage");
-
-    const search =
-        document.getElementById("searchInput")
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    list.innerHTML = "";
-
-
-    /* Search */
-
-    const filteredExpenses =
-        expenses.filter(expense =>
-
-            expense.name
-                .toLowerCase()
-                .includes(search)
-
-            ||
-
-            expense.category
-                .toLowerCase()
-                .includes(search)
-
-            ||
-
-            expense.date
-                .includes(search)
-
-        );
-
-
-    /* Empty state */
-
-    if (filteredExpenses.length === 0) {
-
-        emptyMessage.style.display = "block";
-
-        if (expenses.length > 0) {
-
-            emptyMessage.innerHTML =
-                "No matching expenses found.";
-
-        } else {
-
-            emptyMessage.innerHTML =
-                "No expenses added yet.<br>" +
-                "Start by adding your first expense above.";
-
-        }
-
-        return;
-
-    }
-
-
-    emptyMessage.style.display = "none";
-
-
-    /* Show newest first */
-
-    filteredExpenses
-        .slice()
-        .reverse()
-        .forEach(expense => {
-
-            const item =
-                document.createElement("li");
-
-            item.className = "expense-item";
-
-
-            item.innerHTML = `
-
-                <div>
-
-                    <div class="expense-name">
-                        ${escapeHTML(expense.name)}
-                    </div>
-
-                    <span class="expense-meta">
-
-                        ${getCategoryEmoji(expense.category)}
-                        ${escapeHTML(expense.category)}
-
-                        ·
-
-                        ${formatDate(expense.date)}
-
-                    </span>
-
-                </div>
-
-
-                <div class="expense-right">
-
-                    <span class="expense-amount">
-
-                        ₹${expense.amount.toLocaleString("en-IN")}
-
-                    </span>
-
-
-                    <button
-                        class="delete-btn"
-                        onclick="deleteExpense(${expense.id})"
-                    >
-                        Remove
-                    </button>
-
-                </div>
-
-            `;
-
-
-            list.appendChild(item);
-
-        });
-
-}
-
-
-/* ---------- DASHBOARD ---------- */
-
-function updateDashboard() {
-
-    const total =
-        expenses.reduce(
-            (sum, expense) =>
-                sum + expense.amount,
-            0
-        );
-
-
-    const count =
-        expenses.length;
-
-
-    const average =
-        count > 0
-            ? total / count
-            : 0;
-
-
-    document.getElementById("total")
-        .textContent =
-        "₹" + total.toLocaleString("en-IN");
-
-
-    document.getElementById("count")
-        .textContent =
-        count;
-
-
-    document.getElementById("average")
-        .textContent =
-        "₹" +
-        Math.round(average)
-            .toLocaleString("en-IN");
-
-}
-
-
-/* ---------- CATEGORY EMOJI ---------- */
-
-function getCategoryEmoji(category) {
-
-    const emojis = {
-
-        Food: "🍔",
-
-        Travel: "🚌",
-
-        Education: "📚",
-
-        Shopping: "🛍️",
-
-        Entertainment: "🎮",
-
-        Bills: "💡",
-
-        Other: "📦"
-
-    };
-
-
-    return emojis[category] || "📦";
-
-}
-
-
-/* ---------- ESCAPE HTML ---------- */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
-
-}
-
-
-/* ==========================================
-   CHART
-   ========================================== */
-
-function drawChart() {
-
-    const canvas =
-        document.getElementById("expenseChart");
-
-    const ctx =
-        canvas.getContext("2d");
-
-
-    const containerWidth =
-        canvas.parentElement.clientWidth;
-
-
-    const width =
-        Math.max(containerWidth, 320);
-
-    const height = 360;
-
-
-    const ratio =
-        window.devicePixelRatio || 1;
-
-
-    canvas.width =
-        width * ratio;
-
-    canvas.height =
-        height * ratio;
-
-    canvas.style.width =
-        width + "px";
-
-    canvas.style.height =
-        height + "px";
-
-
-    ctx.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
-    );
-
-
-    /* Clear chart */
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /* Category totals */
-
-    const categoryTotals = {};
-
-
-    expenses.forEach(expense => {
-
-        if (!categoryTotals[expense.category]) {
-
-            categoryTotals[expense.category] = 0;
-
-        }
-
-        categoryTotals[expense.category] +=
-            expense.amount;
-
-    });
-
-
-    const categories =
-        Object.keys(categoryTotals);
-
-
-    /* Empty chart */
-
-    if (categories.length === 0) {
-
-        ctx.fillStyle = "#8892a0";
-
-        ctx.font = "15px 'IBM Plex Sans', Arial";
-
-        ctx.textAlign = "center";
-
-        ctx.fillText(
-            "Add expenses to see your spending chart.",
-            width / 2,
-            height / 2
-        );
-
-        return;
-
-    }
-
-
-    const values =
-        categories.map(
-            category =>
-                categoryTotals[category]
-        );
-
-
-    const maxValue =
-        Math.max(...values);
-
-
-    const left = 65;
-
-    const right = 25;
-
-    const top = 25;
-
-    const bottom = 75;
-
-
-    const chartWidth =
-        width - left - right;
-
-    const chartHeight =
-   
+            clas
